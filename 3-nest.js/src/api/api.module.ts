@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { CPUModule } from "./cpu/cpu.module";
 import { GPUModule } from "./gpu/gpu.module";
 import { MotherboardModule } from "./motherboard/motherboard.module";
+import { RAMModule } from "./ram/ram.module";
 import { StorageModule } from "./storage/storage.module";
 
 @Module({
@@ -9,6 +10,7 @@ import { StorageModule } from "./storage/storage.module";
         CPUModule,
         GPUModule,
         MotherboardModule,
-        StorageModule
+        StorageModule,
+        RAMModule
     ]
 }) export class ApiModule {}
