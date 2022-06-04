@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
 
 export class StorageUpdateDto {
     @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 0 })
@@ -10,11 +10,13 @@ export class StorageUpdateDto {
 
     @IsOptional()
     @IsString()
+    @MaxLength(15)
     @ApiProperty({ type: String, nullable: true, description: 'New Storage Manufacturer Name', example: 'Samsung' })
     public manufacturer?: string;
 
     @IsOptional()
     @IsString()
+    @MaxLength(20)
     @ApiProperty({ type: String, nullable: true, description: 'New Storage Model Name', example: '970 EVO PLUS' })
     public model?: string;
 

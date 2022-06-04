@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
 
 export class RAMUpdateDto {
     @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 0 })
@@ -10,11 +10,13 @@ export class RAMUpdateDto {
 
     @IsOptional()
     @IsString()
+    @MaxLength(10)
     @ApiProperty({ type: String, nullable: true, description: 'New RAM Manufacturer Name', example: 'Patriot' })
     public manufacturer?: string;
 
     @IsOptional()
     @IsString()
+    @MaxLength(25)
     @ApiProperty({ type: String, nullable: true, description: 'New RAM Model Name', example: 'Viper 4' })
     public model?: string;
 

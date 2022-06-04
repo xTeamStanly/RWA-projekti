@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
 
 export class GPUUpdateDto {
     @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 0 })
@@ -10,11 +10,13 @@ export class GPUUpdateDto {
 
     @IsOptional()
     @IsString()
+    @MaxLength(6)
     @ApiProperty({ type: String, nullable: true, description: 'New GPU Manufacturer Name', example: 'Nvidia' })
     public manufacturer?: string;
 
     @IsOptional()
     @IsString()
+    @MaxLength(26)
     @ApiProperty({ type: String, nullable: true, description: 'New GPU Model Name', example: 'GeForce RTX 2060' })
     public model?: string;
 

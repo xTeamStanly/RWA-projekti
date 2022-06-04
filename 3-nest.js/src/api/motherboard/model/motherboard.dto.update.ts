@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
 
 export class MotherboardUpdateDto {
     @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 0 })
@@ -10,11 +10,13 @@ export class MotherboardUpdateDto {
 
     @IsOptional()
     @IsString()
+    @MaxLength(15)
     @ApiProperty({ type: String, nullable: true, description: 'New Motherboard Manufacturer Name', example: 'Gigabyte' })
     public manufacturer?: string;
 
     @IsOptional()
     @IsString()
+    @MaxLength(20)
     @ApiProperty({ type: String, nullable: true, description: 'New Motherboard Model Name', example: 'Z590 VISION G' })
     public model?: string;
 

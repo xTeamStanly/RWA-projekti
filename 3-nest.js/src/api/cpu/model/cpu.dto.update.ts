@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
 
 export class CPUUpdateDto {
     @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 0 })
@@ -10,11 +10,13 @@ export class CPUUpdateDto {
 
     @IsOptional()
     @IsString()
+    @MaxLength(5)
     @ApiProperty({ type: String, nullable: true, description: 'New CPU Manufacturer Name', example: 'Intel' })
     public manufacturer?: string;
 
     @IsOptional()
     @IsString()
+    @MaxLength(20)
     @ApiProperty({ type: String, nullable: true, description: 'New CPU Model Name', example: 'Core i9-10900X' })
     public model?: string;
 
