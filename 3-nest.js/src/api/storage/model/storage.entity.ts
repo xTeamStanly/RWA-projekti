@@ -14,6 +14,6 @@ export class Storage {
     @Column({ type: 'numeric', nullable: false })
     public price!: number;
 
-    @Column({ type: 'number', nullable: true })
+    @Column({ type: 'numeric', nullable: true })
     public capacity?: number;
 };
