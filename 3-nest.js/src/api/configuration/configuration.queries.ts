@@ -15,6 +15,7 @@ const getAllUserPurchases: string = `
     SELECT
 	    "purchase"."id",
 	    "configurationId",
+        "date",
 	    (SELECT "name" FROM "configuration" WHERE "configurationId" = "configuration"."id") as "name",
 	    (
 		    SELECT (cpu.price + gpu.price + motherboard.price + ram.price + storage.price) AS price

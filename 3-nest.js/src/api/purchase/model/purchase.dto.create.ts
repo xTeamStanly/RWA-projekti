@@ -6,5 +6,5 @@ export class PurchaseCreateDto {
     @IsPositive()
     @IsNotEmpty()
     @ApiProperty({ type: Number, nullable: false, description: 'Purchase Configration ID', example: 1 })
-    public id!: number;
+    public configurationId!: number;
 };

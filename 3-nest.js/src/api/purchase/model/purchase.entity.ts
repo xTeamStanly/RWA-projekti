@@ -1,6 +1,6 @@
 import { Configuration } from "src/api/configuration/model/configuration.entity";
 import { User } from "src/api/user/model/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'purchase' })
 export class Purchase {
@@ -13,6 +13,6 @@ export class Purchase {
     @ManyToOne(() => User)
     public user: User;
 
-    @Column({ type: 'timestamptz', nullable: false })
+    @CreateDateColumn()
     public date: Date;
 }
