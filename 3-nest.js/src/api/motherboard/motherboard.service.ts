@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Request } from "express";
+import { UserRoles } from "src/enums";
 import { MotherboardIDName } from "src/interfaces";
 import { DeleteResult, Repository } from "typeorm";
+import { User } from "../user/model/user.entity";
 import { MotherboardCreateDto } from "./model/motherboard.dto.create";
 import { MotherboardDeleteDto } from "./model/motherboard.dto.delete";
 import { MotherboardUpdateDto } from "./model/motherboard.dto.update";
@@ -22,7 +25,10 @@ export class MotherboardService {
         throw new Error('Motherboard not found!');
     }
 
-    public async newMotherboard(body: MotherboardCreateDto) : Promise<Motherboard> | never {
+    public async newMotherboard(body: MotherboardCreateDto, req: Request) : Promise<Motherboard> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         const motherboard: Motherboard = new Motherboard();
         motherboard.manufacturer = body.manufacturer;
         motherboard.model = body.model;
@@ -31,7 +37,10 @@ export class MotherboardService {
         return this.repository.save(motherboard);
     }
 
-    public async editMotherboard(body: MotherboardUpdateDto): Promise<Motherboard> | never {
+    public async editMotherboard(body: MotherboardUpdateDto, req: Request): Promise<Motherboard> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let manufacturer: string = body.manufacturer?.trim();
         let model: string = body.model?.trim();
         let price: number = body.price;
@@ -88,7 +97,10 @@ export class MotherboardService {
         throw new Error('Motherboard information did not change!');
     }
 
-    public async deleteMotherboard(body: MotherboardDeleteDto) : Promise<boolean> | never {
+    public async deleteMotherboard(body: MotherboardDeleteDto, req: Request) : Promise<boolean> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let result: DeleteResult = await this.repository.delete(body.id);
         return !!result.affected;
     }

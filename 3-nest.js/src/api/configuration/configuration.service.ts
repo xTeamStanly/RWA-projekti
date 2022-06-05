@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Request } from "express";
+import { UserRoles } from "src/enums";
 import { ConfigurationIDNamePrice } from "src/interfaces";
 import { DeleteResult, Repository } from "typeorm";
 import { CPU } from "../cpu/model/cpu.entity";
@@ -7,6 +9,7 @@ import { GPU } from "../gpu/model/gpu.entity";
 import { Motherboard } from "../motherboard/model/motherboard.entity";
 import { RAM } from "../ram/model/ram.entity";
 import { Storage } from "../storage/model/storage.entity";
+import { User } from "../user/model/user.entity";
 import { getAllConfigurationPrices } from "./configuration.queries";
 import { ConfigurationCreateDto } from "./model/configuration.dto.create";
 import { ConfigurationDeleteDto } from "./model/configuration.dto.delete";
@@ -45,7 +48,10 @@ export class ConfigurationService {
         throw new Error('GPU not found!');
     }
 
-    public async newConfiguration(body: ConfigurationCreateDto) : Promise<Configuration> | never {
+    public async newConfiguration(body: ConfigurationCreateDto, req: Request) : Promise<Configuration> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         const cpu: CPU = await this.cpuRepository.findOne({ where: { id: body.cpuID } });
         if(!cpu) { throw new Error('CPU not found!'); }
 
@@ -72,7 +78,10 @@ export class ConfigurationService {
         return this.repository.save(configuration);
     }
 
-    public async editConfiguration(body: ConfigurationUpdateDto) : Promise<Configuration> | never {
+    public async editConfiguration(body: ConfigurationUpdateDto, req: Request) : Promise<Configuration> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let cpuID: number = body.cpuID;
         let gpuID: number = body.gpuID;
         let ramID: number = body.ramID;
@@ -84,7 +93,11 @@ export class ConfigurationService {
             throw new Error('Configuration information did not change!');
         }
 
-        let savedConfiguration: Configuration = await this.repository.findOne({ where: { id: body.id } });
+        let savedConfiguration: Configuration = await this.repository.findOne({
+            where: { id: body.id },
+            relations: [ 'cpu', 'gpu', 'ram', 'motherboard', 'storage' ]
+        });
+        console.log(savedConfiguration);
         if(!savedConfiguration) { throw new Error('Configuration not found!'); }
 
         let shouldUpdate: boolean[] = [ true, true, true, true, true, true ];
@@ -185,14 +198,17 @@ export class ConfigurationService {
 
         for(let i = 0; i < 6; i++) {
             if(shouldUpdate[i] === true) {
-                return this.repository.save(savedConfiguration); // todo relacije return
+                return this.repository.save(savedConfiguration);
             }
         }
 
         throw new Error('Configuration information did not change!');
     }
 
-    public async deleteConfiguration(body: ConfigurationDeleteDto) : Promise<boolean> | never {
+    public async deleteConfiguration(body: ConfigurationDeleteDto, req: Request) : Promise<boolean> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let result: DeleteResult = await this.repository.delete(body.id);
         return !!result.affected;
     }

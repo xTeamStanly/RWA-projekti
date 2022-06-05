@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, ParseIntPipe, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { GPUIDName, ServerResponse } from "src/interfaces";
+import { JwtAuthGuard } from "../user/auth/auth.guard";
 import { GPUService } from "./gpu.service";
 import { GPUCreateDto } from "./model/gpu.dto.create";
 import { GPUDeleteDto } from "./model/gpu.dto.delete";
@@ -19,8 +21,11 @@ export class GPUController {
     // kreiraj gpu
     @ApiBody({ type: GPUCreateDto })
     @Post('new')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async newCPU(
-        @Body() body: GPUCreateDto
+        @Body() body: GPUCreateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<GPU>> {
         let response: ServerResponse<GPU> = {
             success: false,
@@ -28,7 +33,7 @@ export class GPUController {
         };
 
         try {
-            response.data = await this.service.newGPU(body);
+            response.data = await this.service.newGPU(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -40,8 +45,11 @@ export class GPUController {
     // update gpu
     @ApiBody({ type: GPUUpdateDto })
     @Post('edit')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async editCPU(
-        @Body() body: GPUUpdateDto
+        @Body() body: GPUUpdateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<GPU>> {
         let response: ServerResponse<GPU> = {
             success: false,
@@ -49,7 +57,7 @@ export class GPUController {
         };
 
         try {
-            response.data = await this.service.editGPU(body);
+            response.data = await this.service.editGPU(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -61,8 +69,11 @@ export class GPUController {
     // delete gpu
     @ApiBody({ type: GPUDeleteDto })
     @Post('delete')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async deleteGPU(
-        @Body() body: GPUDeleteDto
+        @Body() body: GPUDeleteDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<boolean>> {
         let response: ServerResponse<boolean> = {
             success: false,
@@ -70,7 +81,7 @@ export class GPUController {
         };
 
         try {
-            response.data = await this.service.deleteGPU(body);
+            response.data = await this.service.deleteGPU(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;

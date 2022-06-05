@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Request } from "express";
+import { UserRoles } from "src/enums";
 import { CPUIDName } from "src/interfaces";
 import { DeleteResult, Repository } from "typeorm";
+import { User } from "../user/model/user.entity";
 import { getAllCPUTitlesQuery } from "./cpu.queries";
 import { CPUCreateDto } from "./model/cpu.dto.create";
 import { CPUDeleteDto } from "./model/cpu.dto.delete";
@@ -22,7 +25,10 @@ export class CPUService {
         throw new Error('CPU not found!');
     }
 
-    public async newCPU(body: CPUCreateDto) : Promise<CPU> | never {
+    public async newCPU(body: CPUCreateDto, req: Request) : Promise<CPU> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         const cpu: CPU = new CPU();
         cpu.manufacturer = body.manufacturer;
         cpu.model = body.model;
@@ -46,7 +52,10 @@ export class CPUService {
         return this.repository.save(cpu);
     }
 
-    public async editCPU(body: CPUUpdateDto) : Promise<CPU> | never {
+    public async editCPU(body: CPUUpdateDto, req: Request) : Promise<CPU> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let manufacturer: string = body.manufacturer?.trim();
         let model: string = body.model?.trim();
         let price: number = body.price;
@@ -129,7 +138,10 @@ export class CPUService {
         throw new Error('CPU information did not change!');
     }
 
-    public async deleteCPU(body: CPUDeleteDto) : Promise<boolean> | never {
+    public async deleteCPU(body: CPUDeleteDto, req: Request) : Promise<boolean> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let result: DeleteResult = await this.repository.delete(body.id);
         return !!result.affected; // number -> boolean trick
     }

@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, ParseIntPipe, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { CPUIDName, ServerResponse } from "src/interfaces";
+import { JwtAuthGuard } from "../user/auth/auth.guard";
 import { CPUService } from "./cpu.service";
 import { CPUCreateDto } from "./model/cpu.dto.create";
 import { CPUDeleteDto } from "./model/cpu.dto.delete";
@@ -19,8 +21,11 @@ export class CPUController {
     // kreiraj cpu
     @ApiBody({ type: CPUCreateDto })
     @Post('new')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async newCPU(
-        @Body() body: CPUCreateDto
+        @Body() body: CPUCreateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<CPU>> {
         let response: ServerResponse<CPU> = {
             success: false,
@@ -28,7 +33,7 @@ export class CPUController {
         };
 
         try {
-            response.data = await this.service.newCPU(body);
+            response.data = await this.service.newCPU(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -40,8 +45,11 @@ export class CPUController {
     // update cpu
     @ApiBody({ type: CPUUpdateDto })
     @Post('edit')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async editCPU(
-        @Body() body: CPUUpdateDto
+        @Body() body: CPUUpdateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<CPU>> {
         let response: ServerResponse<CPU> = {
             success: false,
@@ -49,7 +57,7 @@ export class CPUController {
         };
 
         try {
-            response.data = await this.service.editCPU(body);
+            response.data = await this.service.editCPU(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -61,8 +69,11 @@ export class CPUController {
     // delete cpu
     @ApiBody({ type: CPUDeleteDto })
     @Post('delete')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async deleteCPU(
-        @Body() body: CPUDeleteDto
+        @Body() body: CPUDeleteDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<boolean>> {
         let response: ServerResponse<boolean> = {
             success: false,
@@ -70,7 +81,7 @@ export class CPUController {
         };
 
         try {
-            response.data = await this.service.deleteCPU(body);
+            response.data = await this.service.deleteCPU(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;

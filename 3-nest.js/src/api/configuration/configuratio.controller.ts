@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, ParseIntPipe, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { ConfigurationIDNamePrice, ServerResponse } from "src/interfaces";
+import { JwtAuthGuard } from "../user/auth/auth.guard";
 import { ConfigurationService } from "./configuration.service";
 import { ConfigurationCreateDto } from "./model/configuration.dto.create";
 import { ConfigurationDeleteDto } from "./model/configuration.dto.delete";
@@ -19,8 +21,11 @@ export class ConfigurationController {
     // kreiraj konfiguraciju
     @ApiBody({ type: ConfigurationCreateDto })
     @Post('new')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async newConfiguration(
-        @Body() body: ConfigurationCreateDto
+        @Body() body: ConfigurationCreateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<Configuration>> {
         let response: ServerResponse<Configuration> = {
             success: false,
@@ -28,7 +33,7 @@ export class ConfigurationController {
         };
 
         try {
-            response.data = await this.service.newConfiguration(body);
+            response.data = await this.service.newConfiguration(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -40,8 +45,11 @@ export class ConfigurationController {
     // update configuration
     @ApiBody({ type: ConfigurationUpdateDto })
     @Post('edit')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async editConfiguration(
-        @Body() body: ConfigurationUpdateDto
+        @Body() body: ConfigurationUpdateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<Configuration>> {
         let response: ServerResponse<Configuration> = {
             success: false,
@@ -49,7 +57,7 @@ export class ConfigurationController {
         };
 
         try {
-            response.data = await this.service.editConfiguration(body);
+            response.data = await this.service.editConfiguration(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -61,8 +69,11 @@ export class ConfigurationController {
     // delete configuration
     @ApiBody({ type: ConfigurationDeleteDto })
     @Post('delete')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async deleteConfiguration(
-        @Body() body: ConfigurationDeleteDto
+        @Body() body: ConfigurationDeleteDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<boolean>> {
         let response: ServerResponse<boolean> = {
             success: false,
@@ -70,7 +81,7 @@ export class ConfigurationController {
         };
 
         try {
-            response.data = await this.service.deleteConfiguration(body);
+            response.data = await this.service.deleteConfiguration(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;

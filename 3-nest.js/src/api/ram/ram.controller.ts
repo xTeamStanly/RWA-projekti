@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, ParseIntPipe, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { RAMIDName, ServerResponse } from "src/interfaces";
+import { JwtAuthGuard } from "../user/auth/auth.guard";
 import { RAMCreateDto } from "./model/ram.dto.create";
 import { RamDeleteDto } from "./model/ram.dto.delete";
 import { RAMUpdateDto } from "./model/ram.dto.update";
@@ -19,8 +21,11 @@ export class RAMController {
     // kreiraj ram
     @ApiBody({ type: RAMCreateDto })
     @Post('new')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async newRAM(
-        @Body() body: RAMCreateDto
+        @Body() body: RAMCreateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<RAM>> {
         let response: ServerResponse<RAM> = {
             success: false,
@@ -28,7 +33,7 @@ export class RAMController {
         };
 
         try {
-            response.data = await this.service.newRAM(body);
+            response.data = await this.service.newRAM(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -40,8 +45,11 @@ export class RAMController {
     // update ram
     @ApiBody({ type: RAMUpdateDto })
     @Post('edit')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async editRAM(
-        @Body() body: RAMUpdateDto
+        @Body() body: RAMUpdateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<RAM>> {
         let response: ServerResponse<RAM> = {
             success: false,
@@ -49,7 +57,7 @@ export class RAMController {
         };
 
         try {
-            response.data = await this.service.editRAM(body);
+            response.data = await this.service.editRAM(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -61,8 +69,11 @@ export class RAMController {
     // delete ram
     @ApiBody({ type: RamDeleteDto })
     @Post('delete')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async deleteRAM(
-        @Body() body: RamDeleteDto
+        @Body() body: RamDeleteDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<boolean>> {
         let response: ServerResponse<boolean> = {
             success: false,
@@ -70,7 +81,7 @@ export class RAMController {
         };
 
         try {
-            response.data = await this.service.deleteRAM(body);
+            response.data = await this.service.deleteRAM(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;

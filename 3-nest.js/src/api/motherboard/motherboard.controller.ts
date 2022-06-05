@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, ParseIntPipe, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { MotherboardIDName, ServerResponse } from "src/interfaces";
+import { JwtAuthGuard } from "../user/auth/auth.guard";
 import { MotherboardCreateDto } from "./model/motherboard.dto.create";
 import { MotherboardDeleteDto } from "./model/motherboard.dto.delete";
 import { MotherboardUpdateDto } from "./model/motherboard.dto.update";
@@ -19,8 +21,11 @@ export class MotherboardController {
     // kreiraj maticnu
     @ApiBody({ type: MotherboardCreateDto })
     @Post('new')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async newMotherboard(
-        @Body() body: MotherboardCreateDto
+        @Body() body: MotherboardCreateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<Motherboard>> {
         let response: ServerResponse<Motherboard> = {
             success: false,
@@ -28,7 +33,7 @@ export class MotherboardController {
         };
 
         try {
-            response.data = await this.service.newMotherboard(body);
+            response.data = await this.service.newMotherboard(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -40,8 +45,11 @@ export class MotherboardController {
     // update motherboard
     @ApiBody({ type: MotherboardUpdateDto })
     @Post('edit')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async editMotherboard(
-        @Body() body: MotherboardUpdateDto
+        @Body() body: MotherboardUpdateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<Motherboard>> {
         let response: ServerResponse<Motherboard> = {
             success: false,
@@ -49,7 +57,7 @@ export class MotherboardController {
         };
 
         try {
-            response.data = await this.service.editMotherboard(body);
+            response.data = await this.service.editMotherboard(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -61,8 +69,11 @@ export class MotherboardController {
     // delete motherboard
     @ApiBody({ type: MotherboardDeleteDto })
     @Post('delete')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async deleteMotherboard(
-        @Body() body: MotherboardDeleteDto
+        @Body() body: MotherboardDeleteDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<boolean>> {
         let response: ServerResponse<boolean> = {
             success: false,
@@ -70,7 +81,7 @@ export class MotherboardController {
         };
 
         try {
-            response.data = await this.service.deleteMotherboard(body);
+            response.data = await this.service.deleteMotherboard(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;

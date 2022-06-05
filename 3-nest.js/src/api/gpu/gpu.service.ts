@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Request } from "express";
+import { UserRoles } from "src/enums";
 import { GPUIDName } from "src/interfaces";
 import { DeleteResult, Repository } from "typeorm";
+import { User } from "../user/model/user.entity";
 import { getAllGPUTitlesQuery } from "./gpu.queries";
 import { GPUCreateDto } from "./model/gpu.dto.create";
 import { GPUDeleteDto } from "./model/gpu.dto.delete";
@@ -22,7 +25,10 @@ export class GPUService {
         throw new Error('GPU not found!');
     }
 
-    public async newGPU(body: GPUCreateDto) : Promise<GPU> | never {
+    public async newGPU(body: GPUCreateDto, req: Request) : Promise<GPU> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         const gpu: GPU = new GPU();
         gpu.manufacturer = body.manufacturer;
         gpu.model = body.model;
@@ -39,7 +45,10 @@ export class GPUService {
         return this.repository.save(gpu);
     }
 
-    public async editGPU(body: GPUUpdateDto) : Promise<GPU> | never {
+    public async editGPU(body: GPUUpdateDto, req: Request) : Promise<GPU> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let manufacturer: string = body.manufacturer?.trim();
         let model: string = body.model?.trim();
         let price: number = body.price;
@@ -109,7 +118,10 @@ export class GPUService {
         throw new Error('GPU information did not change!');
     }
 
-    public async deleteGPU(body: GPUDeleteDto) : Promise<boolean> | never {
+    public async deleteGPU(body: GPUDeleteDto, req: Request) : Promise<boolean> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let result: DeleteResult = await this.repository.delete(body.id);
         return !!result.affected;
     }

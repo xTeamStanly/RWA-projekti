@@ -5,6 +5,7 @@ import { GPUModule } from "./gpu/gpu.module";
 import { MotherboardModule } from "./motherboard/motherboard.module";
 import { RAMModule } from "./ram/ram.module";
 import { StorageModule } from "./storage/storage.module";
+import { UserModule } from "./user/user.module";
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { StorageModule } from "./storage/storage.module";
         MotherboardModule,
         StorageModule,
         RAMModule,
-        ConfigurationModule
+        ConfigurationModule,
+        UserModule
     ]
 }) export class ApiModule {}

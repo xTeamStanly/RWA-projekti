@@ -1,6 +1,7 @@
 import { Body, ClassSerializerInterceptor, Controller, Inject, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
+import { ServerResponse } from "src/interfaces";
 import { User } from "../model/user.entity";
 import { JwtAuthGuard } from "./auth.guard";
 import { AuthService } from "./auth.service";
@@ -19,25 +20,61 @@ export class AuthController {
     @ApiBody({ type: AuthRegisterDto })
     @Post('register')
     @UseInterceptors(ClassSerializerInterceptor)
-    private register(
+    public async register(
         @Body() body: AuthRegisterDto
-    ) : Promise<User | never> {
-        return this.service.register(body);
+    ) : Promise<ServerResponse<User>> {
+        let response: ServerResponse<User> = {
+            success: false,
+            data: null
+        };
+
+        try {
+            response.data = await this.service.register(body);
+            response.success = true;
+        } catch(err) {
+            response.message = err.message;
+        }
+
+        return response;
     }
 
     @ApiBody({ type: AuthLoginDto })
     @Post('login')
-    private login(
+    public async login(
         @Body() body: AuthLoginDto
-    ) : Promise<string | never> {
-        return this.service.login(body);
+    ) : Promise<ServerResponse<string>> {
+        let response: ServerResponse<string> = {
+            success: false,
+            data: null
+        };
+
+        try {
+            response.data = await this.service.login(body);
+            response.success = true;
+        } catch(err) {
+            response.message = err.message;
+        }
+
+        return response;
     }
 
     @Post('refresh')
     @UseGuards(JwtAuthGuard)
-    private refresh(
+    public async refresh(
         @Req() { user } : Request
-    ) : Promise<string | never> {
-        return this.service.refresh(user as User);
+    ) : Promise<ServerResponse<string>> {
+        let response: ServerResponse<string> = {
+            success: false,
+            data: null
+        };
+
+        try {
+            response.data = await this.service.refresh(user as User);
+            response.success = true;
+        } catch(err) {
+            response.message = err.message;
+        }
+
+        return response;
     }
 }

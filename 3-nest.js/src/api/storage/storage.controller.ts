@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, ParseIntPipe, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { ServerResponse, StorageIDName } from "src/interfaces";
+import { JwtAuthGuard } from "../user/auth/auth.guard";
 import { StorageCreateDto } from "./model/storage.dto.create";
 import { StorageDeleteDto } from "./model/storage.dto.delete";
 import { StorageUpdateDto } from "./model/storage.dto.update";
@@ -20,8 +22,11 @@ export class StorageController {
     // kreiraj skladiste
     @ApiBody({ type: StorageCreateDto })
     @Post('new')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async newStorage(
-        @Body() body: StorageCreateDto
+        @Body() body: StorageCreateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<Storage>> {
         let response: ServerResponse<Storage> = {
             success: false,
@@ -29,7 +34,7 @@ export class StorageController {
         };
 
         try {
-            response.data = await this.service.newStorage(body);
+            response.data = await this.service.newStorage(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -41,8 +46,11 @@ export class StorageController {
     // update storage
     @ApiBody({ type: StorageUpdateDto })
     @Post('edit')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async editStorage(
-        @Body() body: StorageUpdateDto
+        @Body() body: StorageUpdateDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<Storage>> {
         let response: ServerResponse<Storage> = {
             success: false,
@@ -50,7 +58,7 @@ export class StorageController {
         };
 
         try {
-            response.data = await this.service.editStorage(body);
+            response.data = await this.service.editStorage(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;
@@ -62,8 +70,11 @@ export class StorageController {
     // delete storage
     @ApiBody({ type: StorageDeleteDto })
     @Post('delete')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(ClassSerializerInterceptor)
     public async deleteStorage(
-        @Body() body: StorageDeleteDto
+        @Body() body: StorageDeleteDto,
+        @Req() req: Request
     ) : Promise<ServerResponse<boolean>> {
         let response: ServerResponse<boolean> = {
             success: false,
@@ -71,7 +82,7 @@ export class StorageController {
         };
 
         try {
-            response.data = await this.service.deleteStorage(body);
+            response.data = await this.service.deleteStorage(body, req);
             response.success = true;
         } catch(err) {
             response.message = err.message;

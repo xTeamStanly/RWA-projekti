@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Request } from "express";
+import { UserRoles } from "src/enums";
 import { StorageIDName } from "src/interfaces";
 import { DeleteResult, Repository } from "typeorm";
+import { User } from "../user/model/user.entity";
 import { StorageCreateDto } from "./model/storage.dto.create";
 import { StorageDeleteDto } from "./model/storage.dto.delete";
 import { StorageUpdateDto } from "./model/storage.dto.update";
@@ -22,7 +25,10 @@ export class StorageService {
         throw new Error('Storage not found!');
     }
 
-    public async newStorage(body: StorageCreateDto) : Promise<Storage> | never {
+    public async newStorage(body: StorageCreateDto, req: Request) : Promise<Storage> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         const storage: Storage = new Storage();
         storage.manufacturer = body.manufacturer;
         storage.model = body.model;
@@ -38,7 +44,10 @@ export class StorageService {
         return this.repository.save(storage);
     }
 
-    public async editStorage(body: StorageUpdateDto) : Promise<Storage> | never {
+    public async editStorage(body: StorageUpdateDto, req: Request) : Promise<Storage> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let manufacturer: string = body.manufacturer?.trim();
         let model: string = body.model?.trim();
         let price: number = body.price;
@@ -107,7 +116,10 @@ export class StorageService {
         throw new Error('Storage information did not change!');
     }
 
-    public async deleteStorage(body: StorageDeleteDto) : Promise<boolean> | never {
+    public async deleteStorage(body: StorageDeleteDto, req: Request) : Promise<boolean> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let result: DeleteResult = await this.repository.delete(body.id);
         return !!result.affected;
     }

@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Request } from "express";
+import { UserRoles } from "src/enums";
 import { RAMIDName } from "src/interfaces";
 import { DeleteResult, Repository } from "typeorm";
+import { User } from "../user/model/user.entity";
 import { RAMCreateDto } from "./model/ram.dto.create";
 import { RamDeleteDto } from "./model/ram.dto.delete";
 import { RAMUpdateDto } from "./model/ram.dto.update";
@@ -22,7 +25,10 @@ export class RAMService {
         throw new Error('RAM not found!');
     }
 
-    public async newRAM(body: RAMCreateDto) : Promise<RAM> | never {
+    public async newRAM(body: RAMCreateDto, req: Request) : Promise<RAM> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         const ram: RAM = new RAM();
         ram.manufacturer = body.manufacturer;
         ram.model = body.model;
@@ -47,7 +53,10 @@ export class RAMService {
         return this.repository.save(ram);
     }
 
-    public async editRAM(body: RAMUpdateDto) : Promise<RAM> | never {
+    public async editRAM(body: RAMUpdateDto, req: Request) : Promise<RAM> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let manufacturer: string = body.manufacturer?.trim();
         let model: string = body.model?.trim();
         let price: number = body.price;
@@ -131,7 +140,10 @@ export class RAMService {
         throw new Error('RAM information did not change!');
     }
 
-    public async deleteRAM(body: RamDeleteDto) : Promise<boolean> | never {
+    public async deleteRAM(body: RamDeleteDto, req: Request) : Promise<boolean> | never {
+        const user: User = req.user as User;
+        if(user.role !== UserRoles.ADMINISTRATOR) { throw new Error('Unauthorized!'); }
+
         let result: DeleteResult = await this.repository.delete(body.id);
         return !!result.affected;
     }
