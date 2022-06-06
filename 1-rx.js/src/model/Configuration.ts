@@ -1,4 +1,4 @@
-import { clamp } from "../lib/util";
+import { clamp, map_range } from "../lib/util";
 import { CPU } from "./CPU";
 import { GPU } from "./GPU";
 import { Motherboard } from "./Motherboard";
@@ -29,11 +29,10 @@ export class Configuration {
     }
 
     public getPerforamanceMetric() : number {
-        const cpuMetrics: number = ~~clamp(clamp(this.cpu.cores, 10) * 25 + clamp(this.cpu.frequency, 3.7) * 19, 400);
-        const gpuMetrics: number = ~~clamp(clamp(this.gpu.vram, 20) * 13, 250);
-        const ramMetrics: number = ~~clamp(clamp(this.ram.capacity, 32) * 2.1 + clamp(this.ram.frequency, 3400) * 0.02, 300);
-        const storageMetrics: number = ~~clamp(clamp(this.storage.capacity, 2) * 25 ,50);
-
+        const cpuMetrics: number = ~~clamp(map_range(this.cpu.cores, 0, 10, 0, 250) + map_range(this.cpu.frequency, 0, 3.7, 0, 67), 400);
+        const gpuMetrics: number = ~~clamp(map_range(this.gpu.vram, 0, 20, 0, 250), 250);
+        const ramMetrics: number = ~~clamp(map_range(this.ram.capacity, 0, 32, 0, 67) + map_range(this.ram.frequency, 0, 3400, 0, 67), 300);
+        const storageMetrics: number = ~~clamp(map_range(this.storage.capacity, 0, 2, 0, 50), 50);
         const finalMetrics: number = ~~clamp(cpuMetrics + gpuMetrics + ramMetrics + storageMetrics, 1000);
         return finalMetrics;
     }
