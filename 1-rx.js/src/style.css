@@ -1,0 +1,23 @@
+body {
+    background-color: lightblue;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    padding: 10px;
+}
+
+.titleDiv {
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+
+    font-size: 35pt;
+}
+
+label { font-size: 18pt; }
+input { font-size: 18pt; }
