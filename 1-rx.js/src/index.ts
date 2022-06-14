@@ -4,7 +4,7 @@ import { componentNames, generateTitle } from "./common/common";
 import { notifyUser } from "./lib/notify";
 import { createComponentObservable } from "./lib/observables";
 import { generateElements, renderContainer } from "./lib/render";
-var scrollToElement = require('scroll-to-element');
+
 
 function main() {
     const finalDiv: HTMLDivElement = document.createElement('div');
@@ -22,18 +22,17 @@ function main() {
     // elements
     const labels: HTMLLabelElement[] = [];
     const inputs: HTMLInputElement[] = [];
-    const results: HTMLDivElement[] = []; // todo div sa rezultatima sastavljene konfiguracije, scrollto ide tu
+    let results: HTMLDivElement[] = []; // samo jedan clan u n todo div sa rezultatima sastavljene konfiguracije, scrollto ide tu
 
-
-    generateElements(labels, componentNames, inputs);
-    renderContainer(finalDiv, labels, inputs);
+    generateElements(labels, componentNames, inputs, results);
+    renderContainer(finalDiv, labels, inputs, results);
     createComponentObservable(inputs);
 
-    // todo
-    // scrollToElement(inputs[4], {
-    //     offset: 0,
-    //     duration: 250
-    // });
+    // inputs[0].value = 'Ryzen 7 3700X';
+    // inputs[1].value = 'Radeon RX 5600XT';
+    // inputs[2].value = 'HyperX Fury';
+    // inputs[3].value = 'Gold 2';
+    // inputs[4].value = 'Z390';
 }
 
 main();

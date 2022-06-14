@@ -21,3 +21,35 @@ body {
 
 label { font-size: 18pt; }
 input { font-size: 18pt; }
+
+.miniDiv {
+    width: 300px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.miniDivTitle {
+
+    font-style: italic;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 40px;
+
+    background-color: black;
+    border-radius: 10px;
+    color: white;
+}
+
+.miniDivContent {
+
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 50px;
+}
