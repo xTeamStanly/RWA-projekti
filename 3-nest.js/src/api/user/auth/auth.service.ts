@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "../model/user.entity";
+import { UserWithToken } from "./auth.controller";
 import { AuthHelper } from "./auth.helper";
 import { AuthLoginDto } from "./model/auth.dto.login";
 import { AuthRegisterDto } from "./model/auth.dto.register";
@@ -32,7 +33,7 @@ export class AuthService {
         return result;
     }
 
-    public async login(body: AuthLoginDto) : Promise<string> | never {
+    public async login(body: AuthLoginDto) : Promise<UserWithToken> | never {
         const { email, password } : AuthLoginDto = body;
         const user: User = await this.repository.findOne({ where: { email } });
 
@@ -41,7 +42,13 @@ export class AuthService {
         const isPasswordValid: boolean = this.helper.isPasswordValid(password, user.password);
         if(!isPasswordValid) { throw new HttpException('User not found!', HttpStatus.NOT_FOUND); }
 
-        return this.helper.generateToken(user);
+        delete user['password'];
+        delete user['role'];
+
+        return {
+            ...user,
+            token: this.helper.generateToken(user)
+        };
     }
 
     public async refresh(user: User) : Promise<string> {

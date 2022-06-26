@@ -8,6 +8,8 @@ import { AuthService } from "./auth.service";
 import { AuthLoginDto } from "./model/auth.dto.login";
 import { AuthRegisterDto } from "./model/auth.dto.register";
 
+export interface UserWithToken extends User { token: string; }
+
 @ApiTags('Auth')
 @Controller({
     path: 'auth',
@@ -42,8 +44,8 @@ export class AuthController {
     @Post('login')
     public async login(
         @Body() body: AuthLoginDto
-    ) : Promise<ServerResponse<string>> {
-        let response: ServerResponse<string> = {
+    ) : Promise<ServerResponse<UserWithToken>> {
+        let response: ServerResponse<UserWithToken> = {
             success: false,
             data: null
         };
