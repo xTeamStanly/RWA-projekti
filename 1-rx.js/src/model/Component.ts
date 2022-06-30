@@ -4,3 +4,9 @@ export interface Component {
     model: string,
     price: number
 };
+
+export interface ComponentDetail {
+    notificationMessage: string,
+    urlName: string,
+    errorMessage: string
+};

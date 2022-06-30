@@ -1,8 +1,9 @@
 import { combineLatest, debounceTime, filter, fromEvent, map, Observable, switchMap } from "rxjs";
 import Swal from "sweetalert2";
 import { componentNames } from "../common/common";
+import { componentDetails } from "../common/componentDetails";
 import { Benchmark } from "../model/Benchmark";
-import { Component } from "../model/Component";
+import { Component, ComponentDetail } from "../model/Component";
 import { Configuration } from "../model/Configuration";
 
 import { CPU } from "../model/CPU";
@@ -11,7 +12,7 @@ import { Motherboard } from "../model/Motherboard";
 import { RAM } from "../model/RAM";
 import { Software } from "../model/Software";
 import { Storage } from "../model/Storage";
-import { allSoftware, findCpu, findGpu, findMotherboard, findRam, findStorage } from "./database";
+import { allSoftware, findComponentBuilder } from "./database";
 import { notifyUser } from "./notify";
 import { clearElement } from "./util";
 
@@ -33,37 +34,20 @@ export function createComponentInputObservable<T extends Component>(input: HTMLI
 export function createComponentObservable(
     inputs: HTMLInputElement[]
 ) {
-    const cpuObservable: Observable<CPU> = createComponentInputObservable<CPU>(inputs[0], findCpu, 0);
-    cpuObservable.subscribe((cpu: CPU) => {
-        notifyUser('CPU Found', cpu.model, 'success');
-        console.log(cpu);
-    });
 
-    const gpuObservable: Observable<GPU> = createComponentInputObservable<GPU>(inputs[1], findGpu, 1);
-    gpuObservable.subscribe((gpu: GPU) => {
-        notifyUser('GPU Found', gpu.model, 'success');
-        console.log(gpu);
-    });
+    const componentObservables: Array<Observable<Component>> = [];
+    for(let i = 0; i < 5; i++) {
+        const componentDetail: ComponentDetail = componentDetails.get(i);
+        const notiticationMessage: string = componentDetail.notificationMessage;
 
-    const ramObservable: Observable<RAM> = createComponentInputObservable<RAM>(inputs[2], findRam, 2);
-    ramObservable.subscribe((ram: RAM) => {
-        notifyUser('RAM Found', ram.model, 'success');
-        console.log(ram);
-    });
+        componentObservables[i] = createComponentInputObservable<Component>(inputs[i], findComponentBuilder(componentDetail), i);
+        componentObservables[i].subscribe((component: Component) => {
+            notifyUser(notiticationMessage, component.model, 'success');
+            console.log(component);
+        });
+    }
 
-    const storageObservable: Observable<Storage> = createComponentInputObservable<Storage>(inputs[3], findStorage, 3);
-    storageObservable.subscribe((storage: Storage) => {
-        notifyUser('Storage Found', storage.model, 'success');
-        console.log(storage);
-    })
-
-    const motherboardObservable: Observable<Motherboard> = createComponentInputObservable<Motherboard>(inputs[4], findMotherboard, 4);
-    motherboardObservable.subscribe((motherboard: Motherboard) => {
-        notifyUser('Motherboard Found', motherboard.model, 'success');
-        console.log(motherboard);
-    });
-
-    combineLatest([ cpuObservable, gpuObservable, ramObservable, storageObservable, motherboardObservable ]).subscribe(([cpu, gpu, ram, storage, motherboard]) => {
+    combineLatest(componentObservables).subscribe(([cpu, gpu, ram, storage, motherboard] : [CPU, GPU, RAM, Storage, Motherboard]) => {
         if(cpu && gpu && ram && storage && motherboard) {
 
             const configuration: Configuration = new Configuration(cpu, gpu, ram, motherboard, storage);
