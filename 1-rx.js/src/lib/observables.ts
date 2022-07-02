@@ -37,7 +37,7 @@ export function createComponentObservable(
 
     const componentObservables: Array<Observable<Component>> = [];
     for(let i = 0; i < 5; i++) {
-        const componentDetail: ComponentDetail = componentDetails.get(i);
+        const componentDetail: ComponentDetail = componentDetails[i];
         const notiticationMessage: string = componentDetail.notificationMessage;
 
         componentObservables[i] = createComponentInputObservable<Component>(inputs[i], findComponentBuilder(componentDetail), i);
