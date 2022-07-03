@@ -1,0 +1,61 @@
+<mat-card
+    class="entryCard"
+    [style.border]="'2px solid ' + entry?.color"
+>
+
+    <!-- card header -->
+    <div class="entryCardHeader">
+
+        <mat-icon class="entryCardHeaderIcon">
+            book
+        </mat-icon>
+
+        <div class="entryCardHeaderTitle">
+            {{entry?.title}}
+        </div>
+
+        <div class="entryCardHeaderRight">
+
+            <div class="entryCardHeaderRightButtons">
+                <button mat-icon-button>
+                    <mat-icon>edit</mat-icon>
+
+                </button>
+
+                <button mat-icon-button>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+
+            <div class="entryCardHeaderRightDate">
+                {{entry?.date?.toLocaleString('sr-RS')}}
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- card content -->
+    <div class="entryCardContent">
+        {{entry?.content?.substring(0, 256) + '...'}}
+    </div>
+
+    <br>
+
+    <!-- card footer -->
+    <div class="entryCardFooter">
+        <div class="entryCardFooterComment" *ngIf="entry?.comment">
+            <span><u>Komentar</u></span>: {{entry?.comment}}
+        </div>
+
+        <br>
+
+        <div class="entryCardFooterKeywords" *ngIf="entry?.keywords && entry?.keywords?.length">
+            <ng-container *ngFor="let keyword of entry?.keywords">
+                <div class="entryCardFooterKeyword">{{keyword}}</div>
+            </ng-container>
+        </div>
+
+    </div>
+
+</mat-card>
