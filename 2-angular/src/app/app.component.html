@@ -1,28 +1,89 @@
 
-<mat-grid-list cols="3" rowHeight="350px">
+
+<mat-drawer-container class="fullscreen">
+    <mat-drawer class="sideNav" mode="side" opened="true">
 
 
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="1" colspan="1">
-        <entry-card></entry-card>
-    </mat-grid-tile>
+
+        <div class="sideNavButtons">
+
+            <div class="sideNavTitle">
+                <div>
+                    <mat-icon class="largeIcon">spa</mat-icon>
+                    &nbsp;
+                    Dnevnik
+                </div>
+            </div>
+
+            <div class="sideNavButtonContainter">
+                <button mat-button class="sideNavButton" routerLink="/">
+                    <div>
+                        <mat-icon class="largeIcon">home</mat-icon>
+                        &nbsp;
+                        Početna
+                    </div>
+                </button>
+            </div>
+
+            <div class="sideNavButtonContainter">
+                <button mat-button class="sideNavButton" routerLink="/new">
+                    <div>
+                        <mat-icon class="largeIcon">add</mat-icon>
+                        &nbsp;
+                        Kreiraj
+                    </div>
+                </button>
+            </div>
+
+            <div class="sideNavButtonContainter">
+                <button mat-button class="sideNavButton" routerLink="/about">
+                    <div>
+                        <mat-icon class="largeIcon">help</mat-icon>
+                        &nbsp;
+                        O Aplikaciji
+                    </div>
+                </button>
+            </div>
+
+        </div>
+
+    </mat-drawer>
+
+    <mat-drawer-content class="sideNavContent" [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
+
+        <router-outlet #outlet="outlet">
+        </router-outlet>
+
+        <!-- <mat-grid-list cols="3" rowHeight="350px">
 
 
-</mat-grid-list>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="1">
+                <entry-card></entry-card>
+            </mat-grid-tile>
+
+
+        </mat-grid-list> -->
+
+
+    </mat-drawer-content>
+</mat-drawer-container>
+
+

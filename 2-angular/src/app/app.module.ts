@@ -13,12 +13,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { AboutComponent } from './components/about/about.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    EntryComponent
+    EntryComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatChipsModule,
     MatGridListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
