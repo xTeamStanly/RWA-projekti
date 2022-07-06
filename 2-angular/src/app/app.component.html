@@ -3,8 +3,6 @@
 <mat-drawer-container class="fullscreen">
     <mat-drawer class="sideNav" mode="side" opened="true">
 
-
-
         <div class="sideNavButtons">
 
             <div class="sideNavTitle">
@@ -16,7 +14,7 @@
             </div>
 
             <div class="sideNavButtonContainter">
-                <button mat-button class="sideNavButton" routerLink="/">
+                <button mat-button [ngClass]="(currentActiveRoute === RoutesType.Home) ? 'sideNavButtonActive' : 'sideNavButton'" routerLink="/" (click)="activateRoute(RoutesType.Home)">
                     <div>
                         <mat-icon class="largeIcon">home</mat-icon>
                         &nbsp;
@@ -26,7 +24,7 @@
             </div>
 
             <div class="sideNavButtonContainter">
-                <button mat-button class="sideNavButton" routerLink="/new">
+                <button mat-button [ngClass]="(currentActiveRoute === RoutesType.Create) ? 'sideNavButtonActive' : 'sideNavButton'" routerLink="/new" (click)="activateRoute(RoutesType.Create)">
                     <div>
                         <mat-icon class="largeIcon">add</mat-icon>
                         &nbsp;
@@ -36,7 +34,7 @@
             </div>
 
             <div class="sideNavButtonContainter">
-                <button mat-button class="sideNavButton" routerLink="/about">
+                <button mat-button [ngClass]="(currentActiveRoute === RoutesType.About) ? 'sideNavButtonActive' : 'sideNavButton'" routerLink="/about" (click)="activateRoute(RoutesType.About)">
                     <div>
                         <mat-icon class="largeIcon">help</mat-icon>
                         &nbsp;

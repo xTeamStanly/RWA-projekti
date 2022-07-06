@@ -17,6 +17,8 @@
     height: 100%;
 }
 
+
+
 .sideNavButtonContainter {
     width: 100%;
 }
@@ -44,6 +46,21 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.sideNavButtonActive {
+    width: 100%;
+    font-size: xx-large;
+
+    height: 100px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #5c5cff4e;
+    color: #FFFF00;
 }
 
 .largeIcon {
