@@ -17,7 +17,19 @@ export const defaultEntry: Entry = {
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     date: new Date(0), // Jan 01 1970
 
-    color: '#5C5CFF', // todo create custom color pallete
+    color: '#5C5CFF',
     keywords: [ 'Keyword 1', 'Keyword 2', 'Keyword 3', 'Keyword 4', 'Keyword 5' ],
     comment: 'Default Comment'
 }
+
+export const emptyEntry: Entry = {
+    id: 'my_unique_string_example_2',
+
+    title: '',
+    content: '',
+    date: new Date(),
+
+    color: '#5C5CFF',
+    keywords: [],
+    comment: ''
+};
