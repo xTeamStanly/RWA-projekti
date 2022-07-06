@@ -1,0 +1,66 @@
+<h1>Napravite nove ili izmenite postojeće unose</h1>
+
+<mat-card class="creatorCard">
+    <mat-card-content class="creatorCardContent">
+
+        <div class="creatorCardRow">
+            <mat-form-field class="inputField titleField" hintLabel="Maks. 32 karaktera" appearance="fill">
+                <mat-label>Naslov</mat-label>
+                <input matInput #titleInput maxlength="32" minlength="1" placeholder="Unesite naslov" [value]="entry?.title">
+                <mat-hint align="end">{{titleInput.value?.length || 0}}/32</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="inputField dateField" appearance="fill">
+                <mat-label>Datum</mat-label>
+                <input matInput #dateInput type="date" placeholder="Unesite datum" [value]="getDate()">
+            </mat-form-field>
+
+            <mat-form-field class="inputField colorField" appearance="fill">
+                <mat-label>Boja</mat-label>
+                <input matInput #colorInput type="color" [value]="getColor()">
+            </mat-form-field>
+        </div>
+
+        <div class="creatorCardRow">
+            <mat-form-field class="inputField contentField" appearance="fill">
+                <mat-label>Sadržaj</mat-label>
+                <textarea matInput #contentInput placeholder="Unesite sadržaj" [value]="entry?.content"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="inputField commentField" hintLabel="Maks. 128 karaktera" appearance="fill">
+                <mat-label>Komentar</mat-label>
+                <input matInput #commentInput placeholder="Unesite komentar" maxlength="128" [value]="entry?.comment">
+                <mat-hint align="end">{{commentInput.value?.length || 0}}/128</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="inputField contentField" appearance="fill">
+                <mat-label>Ključne reči</mat-label>
+
+                <mat-chip-list #chipList>
+                <mat-chip *ngFor="let keyword of entry?.keywords" (removed)="removeKeyword(keyword)">
+                    {{keyword}}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+
+                <input placeholder="Unesite novu ključnu reč"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addKeyword($event)" >
+                </mat-chip-list>
+            </mat-form-field>
+
+        </div>
+
+        <div class="creatorCardRow">
+            <button class="submitButtonField" mat-raised-button (click)="submit()">Potvrdi</button>
+        </div>
+
+
+
+    </mat-card-content>
+
+</mat-card>
+
+

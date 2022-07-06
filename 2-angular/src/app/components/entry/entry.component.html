@@ -28,7 +28,7 @@
             </div>
 
             <div class="entryCardHeaderRightDate">
-                {{entry?.date?.toLocaleString('sr-RS')}}
+                {{entry?.date?.toLocaleDateString('sr-RS')}}
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
 
     <!-- card content -->
     <div class="entryCardContent">
-        {{entry?.content?.substring(0, 256) + '...'}}
+        {{getContent()}}
     </div>
 
     <br>

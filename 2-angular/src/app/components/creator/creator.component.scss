@@ -1,0 +1,75 @@
+.creatorCard {
+    border: 3px solid #5C5CFFAA;
+}
+
+.creatorCardContent {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.creatorCardRow {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.inputField {
+    padding: 10px;
+}
+
+.submitButtonField {
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
+    font-size: x-large;
+}
+
+.titleField {
+    width: 420px;
+}
+
+.buttonField {
+    width: 100px;
+    background: #5C5CFFAA;
+}
+
+.contentField {
+    width: 100%;
+
+    textarea {
+        min-height: 300px;
+    }
+}
+
+.commentField {
+    width: 100%;
+}
+
+.mat-raised-button {
+    background-color:#5C5CFFAA;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /* label color */
+    color: white !important;
+}
+
+::ng-deep .mat-input-element {
+    /* | (caret) color */
+    caret-color: white;
+}
+
+::ng-deep .mat-form-field-underline {
+    /* underline color */
+    background-color: white !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+   /* focused underline color */
+   background-color: white !important;
+}

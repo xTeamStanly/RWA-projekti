@@ -14,14 +14,19 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { AboutComponent } from './components/about/about.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { AboutComponent } from './components/about/about.component';
+import { CreatorComponent } from './components/creator/creator.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EntryComponent,
-    AboutComponent
+    AboutComponent,
+    CreatorComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +42,8 @@ import { AboutComponent } from './components/about/about.component';
     MatGridListModule,
     MatButtonModule,
     MatSidenavModule,
+    MatFormFieldModule,
+
 
   ],
   providers: [],
