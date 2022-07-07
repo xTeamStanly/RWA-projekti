@@ -19,6 +19,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AboutComponent } from './components/about/about.component';
 import { CreatorComponent } from './components/creator/creator.component';
 import { HomeComponent } from './components/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { AppState } from './app.state';
+import { entryReducer } from './store/entry.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { EntryEffects } from './store/entry.effects';
 
 @NgModule({
   declarations: [
@@ -43,6 +50,15 @@ import { HomeComponent } from './components/home/home.component';
     MatButtonModule,
     MatSidenavModule,
     MatFormFieldModule,
+
+    HttpClientModule,
+
+    StoreModule.forRoot<AppState>({ entries: entryReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      autoPause: true
+    }),
+    EffectsModule.forRoot([EntryEffects])
 
 
   ],

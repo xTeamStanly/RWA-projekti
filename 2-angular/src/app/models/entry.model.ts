@@ -11,7 +11,7 @@ export interface Entry {
 }
 
 export const defaultEntry: Entry = {
-    id: 'my_unique_string_example',
+    id: 'random_unique_id',
 
     title: 'Default Entry Default Entry 1233 Default Entry Default Entry 1233',
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -23,7 +23,7 @@ export const defaultEntry: Entry = {
 }
 
 export const emptyEntry: Entry = {
-    id: 'my_unique_string_example_2',
+    id: 'random_unique_id_2',
 
     title: '',
     content: '',
