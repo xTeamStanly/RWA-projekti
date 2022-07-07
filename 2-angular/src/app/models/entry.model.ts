@@ -3,7 +3,7 @@ export interface Entry {
 
     title: string;
     content: string;
-    date: Date;
+    date: string;
 
     color: string; // hex color
     keywords: string[];
@@ -11,23 +11,23 @@ export interface Entry {
 }
 
 export const defaultEntry: Entry = {
-    id: 'random_unique_id',
-
-    title: 'Default Entry Default Entry 1233 Default Entry Default Entry 1233',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    date: new Date(0), // Jan 01 1970
-
-    color: '#5C5CFF',
-    keywords: [ 'Keyword 1', 'Keyword 2', 'Keyword 3', 'Keyword 4', 'Keyword 5' ],
-    comment: 'Default Comment'
-}
-
-export const emptyEntry: Entry = {
-    id: 'random_unique_id_2',
+    id: '',
 
     title: '',
     content: '',
-    date: new Date(),
+    date: new Date(0).toLocaleDateString('sr-RS'), // Jan 01 1970
+
+    color: '#5C5CFF',
+    keywords: [],
+    comment: ''
+}
+
+export const emptyEntry: Entry = {
+    id: '',
+
+    title: '',
+    content: '',
+    date: new Date().toLocaleDateString('sr-RS'),
 
     color: '#5C5CFF',
     keywords: [],

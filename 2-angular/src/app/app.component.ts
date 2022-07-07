@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterEvent, Event } from '@angular/router';
 import { fadeAnimation } from './animations';
+import { EntryService } from './services/entry.service';
 
 export enum Routes { Home = 0, Create = 1, About = 2 };
 
@@ -14,7 +15,10 @@ export class AppComponent implements OnInit {
   title = 'Dnevnik';
   RoutesType = Routes;
 
-  constructor(private _router?: Router) {}
+  constructor(
+    private entryService: EntryService,
+    private _router?: Router
+  ) {}
 
   currentActiveRoute: Routes = Routes.Home;
   activateRoute(route: Routes) : void {

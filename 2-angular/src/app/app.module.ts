@@ -15,6 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AboutComponent } from './components/about/about.component';
 import { CreatorComponent } from './components/creator/creator.component';
@@ -26,6 +27,10 @@ import { entryReducer } from './store/entry.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { EntryEffects } from './store/entry.effects';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,9 @@ import { EntryEffects } from './store/entry.effects';
     EntryComponent,
     AboutComponent,
     CreatorComponent,
-    HomeComponent
+    HomeComponent,
+    DialogComponent,
+    DialogDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -43,13 +50,16 @@ import { EntryEffects } from './store/entry.effects';
     // material design modules
     MatCardModule,
     MatIconModule,
-    MatDatepickerModule,
     MatInputModule,
     MatChipsModule,
     MatGridListModule,
     MatButtonModule,
     MatSidenavModule,
     MatFormFieldModule,
+    MatDialogModule,
+
+    MatDatepickerModule,
+    MatNativeDateModule,
 
     HttpClientModule,
 
@@ -58,11 +68,15 @@ import { EntryEffects } from './store/entry.effects';
       maxAge: 25,
       autoPause: true
     }),
-    EffectsModule.forRoot([EntryEffects])
+    EffectsModule.forRoot([EntryEffects]),
+
+    FormsModule
 
 
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

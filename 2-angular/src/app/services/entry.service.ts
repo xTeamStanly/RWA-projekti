@@ -13,6 +13,9 @@ export class EntryService {
 
   private readonly entryUrl: string = environment.api + '/entries';
 
+  transferEntry: Entry | null = null;
+  editMode: boolean = false;
+
   // read
   getEntries() : Observable<Entry[]> {
     return this.httpClient.get<Entry[]>(this.entryUrl);
