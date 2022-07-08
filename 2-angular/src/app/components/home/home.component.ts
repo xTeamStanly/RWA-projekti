@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { Entry } from 'src/app/models/entry.model';
 import { loadEntries } from 'src/app/store/entry.actions';
 import { getEntries } from 'src/app/store/entry.selector';
+import { DialogEntryComponent } from '../dialog-entry/dialog-entry.component';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +18,16 @@ export class HomeComponent implements OnInit {
   entries: Observable<Entry[]> = of([]);
   breakpointColumns: number = 3;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(
+    private store: Store<AppState>,
+    public dialog: MatDialog,
+  ) { }
 
-  logme(event: Event) { console.log(event); }
+  showEntryDialog(entry: Entry) : void {
+    this.dialog.open(DialogEntryComponent, {
+      data: entry
+    });
+  }
 
   private getBreakpointColumsCount(innerWidth: number) : number {
     if(innerWidth >= 2270) { return 3; }

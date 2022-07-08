@@ -31,6 +31,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
+import { DialogEntryComponent } from './components/dialog-entry/dialog-entry.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.
     CreatorComponent,
     HomeComponent,
     DialogComponent,
-    DialogDeleteComponent
+    DialogDeleteComponent,
+    DialogEntryComponent
   ],
   imports: [
     BrowserModule,

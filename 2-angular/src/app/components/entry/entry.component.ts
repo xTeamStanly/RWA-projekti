@@ -13,7 +13,9 @@ import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component'
 export class EntryComponent implements OnInit {
 
   @Input() entry: Entry | null = null;
-  @Output() entrySender: EventEmitter<Entry> = new EventEmitter<Entry>(); // todo fixx
+  @Input() preview: boolean = true;
+  @Output() entrySender: EventEmitter<Entry> = new EventEmitter<Entry>();
+  backgroundColor: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -21,25 +23,33 @@ export class EntryComponent implements OnInit {
     private _router?: Router
   ) { }
 
-
   getContent() : string | undefined {
     if(!this.entry || !this.entry.content) { return ''; }
 
-    if(this.entry.content.length > 256) {
+    if(this.entry.content.length > 256 && this.preview === true) {
       return this.entry.content.substring(0, 256) + '...';
     } else {
       return this.entry.content;
     }
   }
 
-  showEntry() : void {
-    this.entrySender.emit(this.entry as Entry);
+  showEntryDialog() : void {
+    if(this.preview === true) { this.entrySender.emit(this.entry as Entry); }
   }
 
-  ngOnInit() { }
+  ngOnInit() : void {
+    if(this.preview === false) {
+      let newColor: string = this.entry!.color.substring(0, 7); // hex
+      newColor += '0F'; // transparent
+      this.backgroundColor = newColor;
+      console.log(this.backgroundColor)
+    }
+  }
 
 
   editEntry(event: Event) : void {
+    this.dialog.closeAll();
+
     this._router?.navigate([ '/new' ]);
 
     this.entryService.transferEntry = this.entry;
@@ -47,6 +57,8 @@ export class EntryComponent implements OnInit {
   }
 
   deleteEntry(event: Event) : void {
+    this.dialog.closeAll();
+
     this.dialog.open(DialogDeleteComponent, {
       data: {
         title: 'Potvrda o brisanju',

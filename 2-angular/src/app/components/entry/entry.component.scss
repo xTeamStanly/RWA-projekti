@@ -1,7 +1,7 @@
 .entryCard {
-    margin: 10px;
-    height: 270px;
-    width: 600px;
+    margin: 15px;
+
+    max-width: 1500px;
 
     display: flex;
     flex-direction: column;
@@ -9,7 +9,26 @@
     border-radius: 10px;
 }
 
+.entryCardPreview {
+    margin: 15px;
+
+    height: 270px;
+    width: 590px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 10px;
+
+    transition: transform .2s;
+}
+
+.entryCardPreview:hover {
+    transform: scale(1.03);
+}
+
 .entryCardHeaderTitle {
+    transition: transform .2s;
     font-size: large;
     font-weight: bold;
 }
@@ -50,8 +69,6 @@
     font-style: italic;
 }
 
-
-
 .entryCardFooter {
     display: flex;
     flex-direction: column;
@@ -72,8 +89,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
-
-
 }
 
 .entryCardFooterKeyword {
@@ -81,5 +96,4 @@
     border-radius: 5px;
     padding: 3px;
     margin: 3px;
-
 }
