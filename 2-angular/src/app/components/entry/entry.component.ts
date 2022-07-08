@@ -1,5 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { defaultEntry, Entry } from 'src/app/models/entry.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Entry } from 'src/app/models/entry.model';
+import { EntryService } from 'src/app/services/entry.service';
+import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 
 @Component({
   selector: 'entry-card',
@@ -8,9 +12,15 @@ import { defaultEntry, Entry } from 'src/app/models/entry.model';
 })
 export class EntryComponent implements OnInit {
 
-  constructor() { }
-
   @Input() entry: Entry | null = null;
+  @Output() entrySender: EventEmitter<Entry> = new EventEmitter<Entry>(); // todo fixx
+
+  constructor(
+    public dialog: MatDialog,
+    private entryService: EntryService,
+    private _router?: Router
+  ) { }
+
 
   getContent() : string | undefined {
     if(!this.entry || !this.entry.content) { return ''; }
@@ -22,8 +32,28 @@ export class EntryComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.entry = defaultEntry;
+  showEntry() : void {
+    this.entrySender.emit(this.entry as Entry);
+  }
+
+  ngOnInit() { }
+
+
+  editEntry(event: Event) : void {
+    this._router?.navigate([ '/new' ]);
+
+    this.entryService.transferEntry = this.entry;
+    this.entryService.editMode = true;
+  }
+
+  deleteEntry(event: Event) : void {
+    this.dialog.open(DialogDeleteComponent, {
+      data: {
+        title: 'Potvrda o brisanju',
+        message: `Da li sigurno želite da obrišete unos "${this.entry!.title}"?`,
+        entryID: this.entry!.id
+      }
+    });
   }
 
 }

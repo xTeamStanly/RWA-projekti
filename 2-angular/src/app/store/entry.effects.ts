@@ -14,9 +14,7 @@ export class EntryEffects {
         private action$: Actions,
         private entryService: EntryService,
         private store: Store<AppState>
-    ) {}
-
-    // todo mergeMap -> switchMap ???
+    ) { }
 
     // read
     loadEntrie$ = createEffect(() =>

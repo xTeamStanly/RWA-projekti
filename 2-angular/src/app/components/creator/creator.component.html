@@ -12,8 +12,11 @@
 
             <mat-form-field class="inputField dateField" appearance="fill">
                 <mat-label>Datum</mat-label>
-                <input matInput #dateInput type="date" placeholder="Unesite datum" [value]="getDate()">
-            </mat-form-field>
+                <input matInput #dateInput placeholder="Unesite datum" [matDatepicker]="picker" [(ngModel)]='localDate'>
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
 
             <mat-form-field class="inputField colorField" appearance="fill">
                 <mat-label>Boja</mat-label>
@@ -57,10 +60,5 @@
             <button class="submitButtonField" mat-raised-button (click)="submit()">Potvrdi</button>
         </div>
 
-
-
     </mat-card-content>
-
 </mat-card>
-
-

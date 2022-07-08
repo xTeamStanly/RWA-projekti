@@ -3,6 +3,8 @@
     [style.border]="'2px solid ' + entry?.color"
 >
 
+    <button (click)="showEntry()">emit</button>
+
     <!-- card header -->
     <div class="entryCardHeader">
 
@@ -17,18 +19,18 @@
         <div class="entryCardHeaderRight">
 
             <div class="entryCardHeaderRightButtons">
-                <button mat-icon-button>
+                <button mat-icon-button (click)="editEntry($event)">
                     <mat-icon>edit</mat-icon>
 
                 </button>
 
-                <button mat-icon-button>
+                <button mat-icon-button (click)="deleteEntry($event)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
 
             <div class="entryCardHeaderRightDate">
-                {{entry?.date?.toLocaleDateString('sr-RS')}}
+                {{entry?.date}}
             </div>
         </div>
     </div>

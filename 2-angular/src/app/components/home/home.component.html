@@ -1,36 +1,10 @@
-<mat-grid-list cols="2" rowHeight="300px">
+<!-- todo fix -->
+<mat-card (entrySender)="logme($event)">TEST ME</mat-card>
 
-    <mat-grid-tile>
-        <entry-card></entry-card>
+<mat-grid-list #entryGrid class="homeContainer" cols="{{breakpointColumns}}" rowHeight="350px" gutterSize="20px" (window:resize)="resize($event)">
+
+    <mat-grid-tile *ngFor="let entry of entries | async">
+        <entry-card [entry]="entry"></entry-card>
     </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <entry-card></entry-card>
-    </mat-grid-tile>
-
 
 </mat-grid-list>

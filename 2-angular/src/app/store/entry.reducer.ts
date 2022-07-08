@@ -25,4 +25,4 @@ export const entryReducer = createReducer(
         return entriesAdapter.updateOne(action.entry, currentState);
     })
 
-)
+);

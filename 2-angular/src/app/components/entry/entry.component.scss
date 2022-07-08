@@ -1,18 +1,12 @@
 .entryCard {
-
-    // min-width: 300px;
-    // max-width: 600px;
-
     margin: 10px;
+    height: 270px;
+    width: 600px;
 
     display: flex;
     flex-direction: column;
 
-
     border-radius: 10px;
-    // position: fixed;
-    // top: 100px;
-    // left: 100px;
 }
 
 .entryCardHeaderTitle {

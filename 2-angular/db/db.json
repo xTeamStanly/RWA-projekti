@@ -1,0 +1,99 @@
+{
+  "entries": [
+    {
+      "id": "x8LR0uWBnZ2Htie6Kb3KB",
+      "title": "Izlet",
+      "content": "Danas sam bio na Bubanj sa društvom i pravili smo piknik. Bilo je lepo i igrali smo badmintor. Posle smo ispekli roštilj i to je to.",
+      "date": "7.2.2022.",
+      "color": "#FF5CFF",
+      "keywords": [
+        "Izlet",
+        "Bubanj",
+        "Piknik"
+      ],
+      "comment": "Lepo sam se proveo :)"
+    },
+    {
+      "id": "_qhSNjVWKWSOZJTAje2vX",
+      "title": "NgRX Store",
+      "content": "Ljudi moji dragi, konačno sam savladao NgRX Store i uspeo da povežem FE i BE. Čak i entiteti rade kako treba. Sada mogu da završim drugi projekat za RWA (Razvoj Web Aplikacija). Ne znam više šta mogu da pišem, a želeo bih da se pojave tri tačkice na entry komponenti. Hvala na pažnji.",
+      "date": "3.3.2022.",
+      "color": "#5C5CAA",
+      "keywords": [
+        "Angular",
+        "NgRX",
+        "RWA",
+        "Elfak",
+        "3. Godina"
+      ],
+      "comment": "Na kraju krajeva nije bilo toliko teško."
+    },
+    {
+      "id": "_qhSnasdjkalsdTAje2vX",
+      "title": "Prosečan dan",
+      "content": "Baš ništa se danas nije desilo. Video sam dugu, bio sam do prodavnice i malo radio na projektu.",
+      "date": "8.7.2022.",
+      "color": "#f524ce",
+      "keywords": [],
+      "comment": ""
+    },
+    {
+      "id": "_djjdjdjdjjdjdjjde2vX",
+      "title": "Upis ocena - Dist. Sistemi",
+      "content": "Danas sam bio na upis ocena iz predmeta distribuirani sistemi. Čuo sam da je dosta težak, tako da mi je drago da sam ga završio.",
+      "date": "7.12.2022.",
+      "color": "#44FBAF",
+      "keywords": [
+        "Elfak",
+        "Distribuirani Sistemi",
+        "3. Godina",
+        "Upis Ocena",
+        "Decembar"
+      ],
+      "comment": "Starije generacije kažu da je ovo težak predmet!"
+    },
+    {
+      "id": "SPOShR6hSCYRcDKvB7oOq",
+      "title": "Loš dan",
+      "date": "8.7.2022.",
+      "color": "#000000",
+      "content": "Danas mi je bio loš dan. Nisam imao kišobran pa sam pokisao kao ništa. Dok sam se vraćao kući, kao so na ranu, automobil je prošao i kompletno me zapljusnuo vodom koja se nalazila preko zapušenog šahta. Ta voda je bila baš prljava pa se nadam da nisam dobio neku infekciju oka. Kada sam došao kući, zbog nevremena, struje nije bilo. Odličan dan :(",
+      "comment": "Nemam komentara, a ni snage da pišem više.",
+      "keywords": [
+        "Loš dan",
+        "Kiša",
+        "Nevreme"
+      ]
+    },
+    {
+      "id": "kCT4JzDa-8YdqP0bdfoUP",
+      "title": "@Output",
+      "date": "9.7.2022.",
+      "color": "#10da1e",
+      "content": "Još ne znam gde da stavim tačno @Output dekorator, plan je bio da kada se pritisne na neki entry, da se emituje taj entry HomeComponent komponenti i da ona pokrene dijalog i da prikaže ceo entry. Problem jeste što iz nekog razloga ta komponenta ne vidi emitovane evente iz entry-ja. Videćemo šta ispadne.",
+      "comment": "",
+      "keywords": [
+        "RWA",
+        "Angular",
+        "3. Godina",
+        "@Output",
+        "EventEmitter",
+        "HomeComponent",
+        "Entry"
+      ]
+    },
+    {
+      "id": "9hHlq44Sf1VFEAZuCX4ZT",
+      "title": "MatGridList",
+      "date": "8.7.2022.",
+      "color": "#ff1100",
+      "content": "Ubacio sam da MatGridList komponenta ima određene breakpoint-te kad se menja njena veličina. U skladu sa veličinom menja se i njen broj kolona.",
+      "comment": "Ništa specijalno 😎",
+      "keywords": [
+        "RWA",
+        "Angular",
+        "MatGridList"
+      ]
+    }
+  ]
+}
