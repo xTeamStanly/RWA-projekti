@@ -10,6 +10,7 @@ import { AppState } from 'src/app/app.state';
 import { addEntry, updateEntry } from 'src/app/store/entry.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { DialogClearComponent } from '../dialog-clear/dialog-clear.component';
 
 
 @Component({
@@ -137,6 +138,12 @@ export class CreatorComponent implements OnInit {
     this.entryService.editMode = false;
     this._router?.navigate([ '/' ]);
   }
+
+  clearEntry() {
+    this.dialog.closeAll();
+    this.dialog.open(DialogClearComponent);
+  }
+
 
   ngOnInit(): void {
 

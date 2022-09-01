@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 import { DialogEntryComponent } from './components/dialog-entry/dialog-entry.component';
+import { DialogClearComponent } from './components/dialog-clear/dialog-clear.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DialogEntryComponent } from './components/dialog-entry/dialog-entry.com
     HomeComponent,
     DialogComponent,
     DialogDeleteComponent,
-    DialogEntryComponent
+    DialogEntryComponent,
+    DialogClearComponent
   ],
   imports: [
     BrowserModule,

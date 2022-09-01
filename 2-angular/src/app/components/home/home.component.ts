@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.breakpointColumns = this.getBreakpointColumsCount(window.innerWidth);
     this.store.dispatch(loadEntries());
     this.entries = this.store.select(getEntries);
   }
