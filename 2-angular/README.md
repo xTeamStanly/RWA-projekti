@@ -6,6 +6,7 @@ Aplikacija koja služi kao neka vrsta online dnevnika, odnosno memoara.
   - [Komponente](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components)
     - [About](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components/about)
     - [Creator](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components/creator)
+    - [DialogClear](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components/dialog-clear)
     - [DialogDelete](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components/dialog-delete)
     - [DialogEntry](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components/dialog-entry)
     - [Dialog](https://github.com/xTeamStanly/RWA-projekti/tree/main/2-angular/src/app/components/dialog)
